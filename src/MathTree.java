@@ -111,7 +111,18 @@ public class MathTree
    private mathNode.Expression percolateDown(mathNode.Expression rootNode, 
          mathNode.Expression newNode)
    {
-      
+      if(rootNode == null) 
+         return newNode;
+      else if(newNode == null)
+         return rootNode;
+      else if(newNode instanceof mathNode.Operator)
+      {
+         mathNode.Operator newOperator = (mathNode.Operator) newNode;
+      }
+      else
+      {
+         
+      }
    }
    
    private void rotateRight(mathNode.Expression parentNode)
