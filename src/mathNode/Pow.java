@@ -1,4 +1,4 @@
-package mathNodes;
+package mathNode;
 
 public class Pow extends Operator
 {

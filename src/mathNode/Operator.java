@@ -1,4 +1,4 @@
-package mathNodes;
+package mathNode;
 
 public abstract class Operator extends Expression
 {

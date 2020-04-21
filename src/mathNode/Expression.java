@@ -1,4 +1,4 @@
-package mathNodes;
+package mathNode;
 
 /**
  * Abstract expression node class.
