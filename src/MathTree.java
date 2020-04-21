@@ -34,7 +34,7 @@ public class MathTree
    
    private boolean buildTree(LinkedList<String> strTokens)
    {
-      rootNode =  buildTree(strTokens, false);
+      rootNode = buildTree(strTokens, false);
 
       if(rootNode == null)
          return false;
@@ -42,6 +42,7 @@ public class MathTree
          return true;
    }
    
+   /*
    private mathNode.Expression buildTree(LinkedList<String> strTokens, boolean isParens)
    {
       String token;
@@ -107,8 +108,9 @@ public class MathTree
       else
          return rootNode;
    }
+   */
    
-   private mathNode.Expression percolateDown(mathNode.Expression rootNode, 
+   private mathNode.Expression insertNode(mathNode.Expression rootNode, 
          mathNode.Expression newNode)
    {
       if(rootNode == null) 
@@ -118,6 +120,21 @@ public class MathTree
       else if(newNode instanceof mathNode.Operator)
       {
          mathNode.Operator newOperator = (mathNode.Operator) newNode;
+         
+         mathNode.Operator parent = (mathNode.Operator) rootNode;
+         
+         if(parent.getPrecedence() <= newOperator.getPrecedence())
+         {
+            newOperator.leftNode = parent;
+            return newOperator;
+         }
+         while(parent.getPrecedence() > newOperator.getPrecedence() &&
+               parent.rightNode != null && parent.rightNode instanceof mathNode.Operator)
+         {
+            parent = (mathNode.Operator) parent.rightNode;
+         }
+         
+         
       }
       else
       {
