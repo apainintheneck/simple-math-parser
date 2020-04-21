@@ -7,7 +7,7 @@ package mathNode;
  */
 public abstract class Expression implements Cloneable
 {
-   public boolean parenthesis = false; //bool to indicate parenthesis around this expression
+   protected boolean parenthesis = false; //bool to indicate parenthesis around this expression
    
    public void setParens(boolean bool) { parenthesis = bool; }
    public boolean isParens() { return parenthesis; }
