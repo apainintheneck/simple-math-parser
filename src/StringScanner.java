@@ -46,8 +46,6 @@ public class StringScanner
     * @return LinkedList of Strings
     */
    public LinkedList<String> scan(String inputStr){
-      tokenList.clear();
-      
       char ch;
       String token = "";
       for(int i = 0; i < inputStr.length(); i++) {
@@ -58,6 +56,7 @@ public class StringScanner
             token = "";
          } else if(specCharSet.contains(ch)) {
             saveToken(token);
+            saveToken(Character.toString(ch));
             token = "";
          } else {
             token = token + ch;
@@ -67,7 +66,10 @@ public class StringScanner
       
       saveToken(token);
       
-      return tokenList;
+      LinkedList<String> copyTokenList = tokenList;
+      tokenList = new LinkedList();
+      
+      return copyTokenList;
    }
    
    private boolean isDelim(char ch) {
