@@ -5,8 +5,8 @@ public class testStringScanner
 {
    static StringScanner scanner = new StringScanner();
    
-   public static void main(String[] args) {
-      
+   public static void main(String[] args) 
+   {
       //Set up scanner
       scanner.skipWhitespace();
       char[] specialChars = {'.', ',', '?', ';', '(', ')'};
@@ -23,7 +23,8 @@ public class testStringScanner
    }
    
    //This class prints the original string and then the scanned string.
-   public static void scanAndPrint(String inputStr) {
+   public static void scanAndPrint(String inputStr) 
+   {
       
       System.out.println("\nOriginal string:\n" + inputStr);
       
