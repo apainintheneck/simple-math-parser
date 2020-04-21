@@ -2,6 +2,8 @@ package mathNodes;
 
 public class Mult extends Operator
 {
+   public Mult() { precedence = 2; }
+   
    public Number calculate()
    {
       Number leftNum = leftNode.calculate();

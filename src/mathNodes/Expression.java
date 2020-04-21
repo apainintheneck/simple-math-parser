@@ -7,7 +7,10 @@ package mathNodes;
  */
 public abstract class Expression implements Cloneable
 {
-   public boolean isParens = false; //bool for parenthesis around this expression
+   public boolean parenthesis = false; //bool to indicate parenthesis around this expression
+   
+   public void setParens(boolean bool) { parenthesis = bool; }
+   public boolean isParens() { return parenthesis; }
    
    /**
     * The calculate expression works recursively down the tree.

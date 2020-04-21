@@ -2,6 +2,8 @@ package mathNodes;
 
 public class Sub extends Operator
 {
+   public Sub() { precedence = 3; }
+   
    public Number calculate()
    {
       Number leftNum = leftNode.calculate();

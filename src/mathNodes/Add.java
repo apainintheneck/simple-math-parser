@@ -2,6 +2,8 @@ package mathNodes;
 
 public class Add extends Operator
 {
+   public Add() { precedence = 3; }
+   
    public Number calculate()
    {
       Number leftNum = leftNode.calculate();
