@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 
+//A testing main for the StringScanner class
 public class testStringScanner
 {
    static StringScanner scanner = new StringScanner();
@@ -21,6 +22,7 @@ public class testStringScanner
 
    }
    
+   //This class prints the original string and then the scanned string.
    public static void scanAndPrint(String inputStr) {
       
       System.out.println("\nOriginal string:\n" + inputStr);
