@@ -33,7 +33,8 @@ public class StringScanner
     * Add array of characters that should become individual tokens when scanned.
     * @param specialCharArray
     */
-   public void addSpecialChar(char[] specialCharArray) {
+   public void addSpecialChar(char[] specialCharArray) 
+   {
       for(char ch : specialCharArray)
          specCharSet.add(ch); 
    }
@@ -45,7 +46,8 @@ public class StringScanner
     * @param inputStr
     * @return LinkedList of Strings
     */
-   public LinkedList<String> scan(String inputStr){
+   public LinkedList<String> scan(String inputStr)
+   {
       char ch;
       String token = "";
       for(int i = 0; i < inputStr.length(); i++) {
@@ -72,11 +74,13 @@ public class StringScanner
       return copyTokenList;
    }
    
-   private boolean isDelim(char ch) {
+   private boolean isDelim(char ch) 
+   {
       return (skipWhitespace && Character.isWhitespace(ch)) || delimSet.contains(ch);
    }
    
-   private void saveToken(String token) {
+   private void saveToken(String token) 
+   {
       if(token.isEmpty() == false)
          tokenList.add(token);
    }
