@@ -1,6 +1,6 @@
 package mathNode;
 
-public class Factory
+public class Factory implements Cloneable
 {
    public Expression buildNode(String token)
    {
