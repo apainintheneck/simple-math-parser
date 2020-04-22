@@ -19,4 +19,13 @@ public class Mult extends Operator
    {
       return leftNode.toString() + " * " + rightNode.toString();
    }
+   
+   @Override
+   public Object clone() throws CloneNotSupportedException
+   {
+      Mult clone = (Mult) super.clone();
+      clone.leftNode = (Expression) this.leftNode.clone();
+      clone.rightNode = (Expression) this.rightNode.clone();
+      return clone;
+   }
 }

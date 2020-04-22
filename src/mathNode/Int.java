@@ -9,4 +9,10 @@ public class Int extends Expression
    public Number calculate() { return value; }
 
    public String toString() { return Integer.toString(value); }
+   
+   @Override
+   public Object clone() throws CloneNotSupportedException
+   {
+      return super.clone();
+   }
 }
