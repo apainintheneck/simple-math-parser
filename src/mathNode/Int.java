@@ -13,6 +13,6 @@ public class Int extends Expression
    @Override
    public Object clone() throws CloneNotSupportedException
    {
-      return super.clone();
+      return (Int) super.clone();
    }
 }

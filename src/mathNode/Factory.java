@@ -37,4 +37,8 @@ public class Factory implements Cloneable
    }
    public Expression buildNode(int num) { return new Int(num); }
    public Expression buildNode(double num) { return new Dec(num); }
+   public Object clone() throws CloneNotSupportedException
+   {
+      return (Factory) super.clone();
+   }
 }

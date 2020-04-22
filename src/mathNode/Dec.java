@@ -13,6 +13,6 @@ public class Dec extends Expression
    @Override
    public Object clone() throws CloneNotSupportedException
    {
-      return super.clone();
+      return (Dec) super.clone();
    }
 }

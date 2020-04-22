@@ -20,6 +20,6 @@ public abstract class Expression implements Cloneable
    abstract public String toString();
    public Object clone() throws CloneNotSupportedException
    {
-      return super.clone();
+      return (Expression) super.clone();
    }
 }
