@@ -42,7 +42,6 @@ public class MathTree
          return true;
    }
    
-   /*
    private mathNode.Expression buildTree(LinkedList<String> strTokens, boolean isParens)
    {
       String token;
@@ -53,22 +52,18 @@ public class MathTree
       {
          token = strTokens.poll();
          
-         if(isParens && token == ")" && rootNode != null) 
+         if(token == ")") 
          {
-            rootNode.setParens(true);
-            return rootNode;
-         }
-         
-         if((token == "-" || token == "+") && lastNode instanceof mathNode.Operator)
-         {
-            if(strTokens.isEmpty()) {
-               System.out.println("Invalid: Missing expression after \"" + token + "\".");
+            if(isParens && rootNode == null)
+            {
+               System.out.println("Invalid: Empty parenthesis.");
                return null;
             }
-            else if(token == "-")
-               strTokens.set(0, "-" + strTokens.getFirst());
-            
-            continue;
+            else
+            {
+               rootNode.setParens(true);
+               return rootNode;
+            }
          }
          
          if(token == "(")
@@ -76,11 +71,11 @@ public class MathTree
             if(lastNode != null && !(lastNode instanceof mathNode.Operator))
             {
                lastNode = nodeFactory.buildNode('*');
-               percolateDown(rootNode, lastNode);
+               rootNode = insertNode(rootNode, lastNode);
             }
             
             lastNode = buildTree(strTokens, true);
-            percolateDown(rootNode, lastNode);
+            rootNode = insertNode(rootNode, lastNode);
             
             if(lastNode == null) 
                return null;
@@ -95,7 +90,7 @@ public class MathTree
          else
          {
             lastNode = nodeFactory.buildNode(token);
-            percolateDown(rootNode, lastNode);
+            rootNode = insertNode(rootNode, lastNode);
          }
          
       }
@@ -108,7 +103,6 @@ public class MathTree
       else
          return rootNode;
    }
-   */
    
    private mathNode.Expression insertNode(mathNode.Expression rootNode, 
          mathNode.Expression newNode)
@@ -128,28 +122,42 @@ public class MathTree
             newOperator.leftNode = parent;
             return newOperator;
          }
+         //Not sure about this part.
          while(parent.getPrecedence() > newOperator.getPrecedence() &&
                parent.rightNode != null && parent.rightNode instanceof mathNode.Operator)
          {
             parent = (mathNode.Operator) parent.rightNode;
          }
          
+         newOperator.leftNode = parent.rightNode;
+         parent.rightNode = newOperator;
+         return rootNode;
          
       }
       else
       {
+         mathNode.Operator parent = (mathNode.Operator) rootNode;
          
+         while(parent.rightNode != null)
+         {
+            if(parent.rightNode instanceof mathNode.Operator)
+               parent = (mathNode.Operator) parent.rightNode;
+            else
+            {
+               System.out.println("Invalid: Missing operator between " + 
+                     parent.rightNode + " + " + newNode);
+               return null;
+            }
+         }
+         
+         parent.rightNode = newNode;
+         return rootNode;
       }
    }
    
-   private void rotateRight(mathNode.Expression parentNode)
+   public void calculate()
    {
-      
-   }
-   
-   public boolean calculate()
-   {
-      
+      answer = rootNode.calculate();
    }
    
    public Number getAnswer() { return answer; }
@@ -161,7 +169,5 @@ public class MathTree
       else
          return rootNode.toString();
    }
-   
-   
    
 }
