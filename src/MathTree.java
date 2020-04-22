@@ -8,22 +8,27 @@ import java.util.LinkedList;
 public class MathTree
 {
    private mathNode.Expression rootNode = null;
-   private Number answer = null;
    private StringScanner strScanner;
    private mathNode.Factory nodeFactory = new mathNode.Factory();
    
+   /**
+    * Constructor that sets up the strScanner.
+    */
    public MathTree() {
       //Set up StringScanner
       strScanner.skipWhitespace();
-      //Includes all special characters except '-' which will be checked for in cleanStrList.
+      //Includes all special characters except '-' which will be checked for in cleanStrList().
       char[] specialChars = {'(', ')', '+', '*', '/', '^'};
       strScanner.addSpecialChar(specialChars);
    }
    
+   /**
+    * Takes the statement for processing and building the tree.
+    * @param mathStatement
+    * @return Returns boolean based upon whether statement is valid and tree can be built.
+    */
    public boolean init(String mathStatement)
    {
-      answer = null;
-      
       LinkedList<String> strList = strScanner.scan(mathStatement);
       
       strList = cleanStrList(strList);
@@ -37,6 +42,13 @@ public class MathTree
       }
    }
    
+   /**
+    * Cleans the list of string tokens created by the strScanner.
+    * Specifically, it discerns between minus and subtraction symbols
+    * and inserts multiplication symbols implied by parenthesis.
+    * @param strList
+    * @return A LinkedList<String> with all the tokens cleaned.
+    */
    private LinkedList<String> cleanStrList(LinkedList<String> strList)
    {
       //Create a new scanner for the negative sign '-'
@@ -44,7 +56,7 @@ public class MathTree
       negScanner.addSpecialChar('-');
       
       //Create list of operators
-      String opStr = "+-*/^";
+      String opStr = "+-*^/";
       
       String tempStr;
       LinkedList<String> newList = new LinkedList();
@@ -91,9 +103,15 @@ public class MathTree
          }
       }
       
-      return strList;
+      return strList; //Cleaned list
    }
    
+   /**
+    * A basic tree building function that calls the main tree building function below.
+    * Returns false if math statement had errors.
+    * @param strTokens
+    * @return A boolean indicating whether the tree was built correctly.
+    */
    private boolean buildTree(LinkedList<String> strTokens)
    {
       rootNode = buildTree(strTokens, false);
@@ -104,6 +122,12 @@ public class MathTree
          return true;
    }
    
+   /**
+    * Function that builds trees of math nodes. Returns null if empty or invalid.
+    * @param strTokens
+    * @param isParens
+    * @return The root node of a new tree of math nodes.
+    */
    private mathNode.Expression buildTree(LinkedList<String> strTokens, boolean isParens)
    {
       String token;
@@ -114,11 +138,17 @@ public class MathTree
       {
          token = strTokens.poll();
          
+         //Handle closed parenthesis
          if(token == ")") 
          {
             if(isParens && rootNode == null)
             {
                System.out.println("Invalid: Empty parenthesis.");
+               return null;
+            }
+            else if(!isParens)
+            {
+               System.out.println("Invalid: Missing open parenthesis.");
                return null;
             }
             else
@@ -166,14 +196,23 @@ public class MathTree
          return rootNode;
    }
    
+   /**
+    * Inserts the new node into the tree of the root node.
+    * @param rootNode
+    * @param newNode
+    * @return Returns root node of tree after node is inserted.
+    */
    private mathNode.Expression insertNode(mathNode.Expression rootNode, 
          mathNode.Expression newNode)
    {
+      //If no root node, new node becomes the root node.
       if(rootNode == null) 
          return newNode;
+      //If no new node, return tree without changes.
       else if(newNode == null)
          return rootNode;
-      else if(newNode instanceof mathNode.Operator)
+      //Place operator node in tree according to precedence.
+      else if(newNode instanceof mathNode.Operator && !newNode.isParens())
       {
          mathNode.Operator newOperator = (mathNode.Operator) newNode;
          
@@ -204,6 +243,7 @@ public class MathTree
          }
          
       }
+      //Place Int, Dec, or parenthesis node in tree.
       else
       {
          mathNode.Operator parent = (mathNode.Operator) rootNode;
@@ -225,13 +265,22 @@ public class MathTree
       }
    }
    
-   public void calculate()
-   {
-      answer = rootNode.calculate();
+   /**
+    * Calls recursive mathNode.Expression.calculate() method to find answer. If tree is empty,
+    * it return null.
+    */
+   public Number solve() 
+   { 
+      if(rootNode == null)
+         return null;
+      else
+         return rootNode.calculate(); 
    }
    
-   public Number getAnswer() { return answer; }
-   
+   /**
+    * Calls recursive mathNode.Expression.toString() method to find answer. If tree is empty,
+    * it return null.
+    */
    public String toString()
    {
       if(rootNode == null) 
