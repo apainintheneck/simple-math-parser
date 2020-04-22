@@ -14,4 +14,11 @@ public abstract class Operator extends Expression
       if(parenthesis)
          precedence = 0;
    }
+   public boolean checkTree() 
+   { 
+      if(leftNode == null || rightNode == null)
+         return false;
+      else
+         return leftNode.checkTree() && rightNode.checkTree();
+   }
 }

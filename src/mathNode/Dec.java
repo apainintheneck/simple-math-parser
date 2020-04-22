@@ -15,4 +15,7 @@ public class Dec extends Expression
    {
       return (Dec) super.clone();
    }
+   
+   @Override
+   public boolean checkTree() { return true; }
 }

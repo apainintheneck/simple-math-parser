@@ -15,4 +15,8 @@ public class Int extends Expression
    {
       return (Int) super.clone();
    }
+
+   @Override
+   public boolean checkTree() { return true; }
+   
 }

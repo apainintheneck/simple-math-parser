@@ -22,4 +22,5 @@ public abstract class Expression implements Cloneable
    {
       return (Expression) super.clone();
    }
+   abstract public boolean checkTree();
 }

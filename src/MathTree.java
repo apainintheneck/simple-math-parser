@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class MathTree
 {
    private mathNode.Expression rootNode = null;
-   private StringScanner strScanner;
+   private StringScanner strScanner = new StringScanner();
    private mathNode.Factory nodeFactory = new mathNode.Factory();
    
    /**
@@ -34,12 +34,15 @@ public class MathTree
       strList = cleanStrList(strList);
       
       if(buildTree(strScanner.scan(mathStatement)))
-         return true;
-      else 
       {
-         rootNode = null;
-         return false;
+         if(rootNode.checkTree())
+            return true;
+         else
+            System.out.println("Invalid: Unknown expression");
       }
+
+      rootNode = null;
+      return false;
    }
    
    /**
@@ -133,6 +136,7 @@ public class MathTree
       String token;
       mathNode.Expression rootNode = null;
       mathNode.Expression lastNode = null;
+      mathNode.Expression newNode = null;
       
       while(strTokens.isEmpty() == false) 
       {
@@ -143,12 +147,12 @@ public class MathTree
          {
             if(isParens && rootNode == null)
             {
-               System.out.println("Invalid: Empty parenthesis.");
+               System.out.println("Invalid: Empty parenthesis");
                return null;
             }
             else if(!isParens)
             {
-               System.out.println("Invalid: Missing open parenthesis.");
+               System.out.println("Invalid: Missing open parenthesis");
                return null;
             }
             else
@@ -166,30 +170,32 @@ public class MathTree
                rootNode = insertNode(rootNode, lastNode);
             }
             
-            lastNode = buildTree(strTokens, true);
-            rootNode = insertNode(rootNode, lastNode);
-            
-            if(lastNode == null) 
+            newNode = buildTree(strTokens, true);
+            if(newNode == null) 
                return null;
+            
+            rootNode = insertNode(rootNode, newNode);
          }
          
-         mathNode.Expression newNode = nodeFactory.buildNode(token);
+         newNode = nodeFactory.buildNode(token);
          if(newNode == null)
          {
             System.out.println("Invalid: Unknown expression \"" + token + "\"");
             return null;
          } 
          else
-         {
-            lastNode = nodeFactory.buildNode(token);
-            rootNode = insertNode(rootNode, lastNode);
-         }
+            rootNode = insertNode(rootNode, newNode);
+         
+         if(rootNode == null)
+            return null;
+         else
+            lastNode = newNode;
          
       }
       
       if(isParens)
       {
-         System.out.println("Invalid: Missing \")\".");
+         System.out.println("Invalid: Missing \")\"");
          return null;
       }
       else
@@ -215,8 +221,15 @@ public class MathTree
       else if(newNode instanceof mathNode.Operator && !newNode.isParens())
       {
          mathNode.Operator newOperator = (mathNode.Operator) newNode;
+         mathNode.Operator parent;
          
-         mathNode.Operator parent = (mathNode.Operator) rootNode;
+         if(rootNode instanceof mathNode.Operator)
+            parent = (mathNode.Operator) rootNode;
+         else
+         {
+            newOperator.leftNode = rootNode;
+            return newOperator;
+         }
          
          if(parent.getPrecedence() <= newOperator.getPrecedence())
          {
@@ -232,7 +245,7 @@ public class MathTree
          
          if(parent.rightNode == null) 
          {
-            System.out.println("Invalid: Missing between two operators.");
+            System.out.println("Invalid: Missing value between two operators");
             return null;
          }
          else
@@ -246,7 +259,16 @@ public class MathTree
       //Place Int, Dec, or parenthesis node in tree.
       else
       {
-         mathNode.Operator parent = (mathNode.Operator) rootNode;
+         mathNode.Operator parent;
+         
+         if(rootNode instanceof mathNode.Operator)
+            parent = (mathNode.Operator) rootNode;
+         else
+         {
+            System.out.println("Invalid: Missing operator between " + 
+                  rootNode + " + " + newNode);
+            return null;
+         }
          
          while(parent.rightNode != null)
          {
