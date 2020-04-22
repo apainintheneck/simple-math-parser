@@ -30,9 +30,9 @@ public class CalcApp
       complexExpressions[1] = "4 - 6 * 2^3";
       complexExpressions[2] = "4*4 - 6/2";
       complexExpressions[3] = "8^2 - 6 * 4";
-      complexExpressions[4] = "7*8*5 - 12";
-      complexExpressions[5] = "12+4*7 - 14";
-      complexExpressions[6] = "7 - 4+5/2";
+      complexExpressions[4] = "7*8*5- 12";
+      complexExpressions[5] = "12+4*7-14";
+      complexExpressions[6] = "7-4+5/2";
       
       System.out.println("---Complex Expressions---");
       for(String expr : complexExpressions)

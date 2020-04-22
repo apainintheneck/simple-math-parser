@@ -31,9 +31,10 @@ public class MathTree
    {
       LinkedList<String> strList = strScanner.scan(mathStatement);
       
-      strList = cleanStrList(strList);
+      //strList = cleanStrList(strList);
+      cleanStrList(strList);
       
-      if(buildTree(strScanner.scan(mathStatement)))
+      if(buildTree(strList))
       {
          if(rootNode.checkTree())
             return true;
@@ -48,11 +49,11 @@ public class MathTree
    /**
     * Cleans the list of string tokens created by the strScanner.
     * Specifically, it discerns between minus and subtraction symbols
-    * and inserts multiplication symbols implied by parenthesis.
+    * and inserts multiplication symbols implied by parenthesis. It does
+    * this by reference so nothing is returned.
     * @param strList
-    * @return A LinkedList<String> with all the tokens cleaned.
     */
-   private LinkedList<String> cleanStrList(LinkedList<String> strList)
+   private void cleanStrList(LinkedList<String> strList)
    {
       //Create a new scanner for the negative sign '-'
       StringScanner negScanner = new StringScanner();
@@ -75,10 +76,11 @@ public class MathTree
             
             if(newList.peekFirst() == "-")
             {
-               newList.remove(i);
+               newList.remove(0);
                newList.set(0, '-' + newList.peekFirst());
             }
             
+            strList.remove(i);
             strList.addAll(i, newList);
             
             i += newList.size() - 1;
@@ -105,8 +107,7 @@ public class MathTree
             }
          }
       }
-      
-      return strList; //Cleaned list
+
    }
    
    /**
@@ -152,7 +153,7 @@ public class MathTree
             }
             else if(!isParens)
             {
-               System.out.println("Invalid: Missing open parenthesis");
+               System.out.println("Invalid: Missing \"(\"");
                return null;
             }
             else
@@ -162,13 +163,16 @@ public class MathTree
             }
          }
          
+         //Handle open parenthesis
          if(token == "(")
          {
+            /* Shouldn't be necessary because of cleanStrList() lines 88-98
             if(lastNode != null && !(lastNode instanceof mathNode.Operator))
             {
                lastNode = nodeFactory.buildNode('*');
                rootNode = insertNode(rootNode, lastNode);
             }
+            */
             
             newNode = buildTree(strTokens, true);
             if(newNode == null) 
