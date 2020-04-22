@@ -15,7 +15,8 @@ public class MathTree
    public MathTree() {
       //Set up StringScanner
       strScanner.skipWhitespace();
-      char[] specialChars = {'(', ')', '+', '-', '*', '/', '^'};
+      //Includes all special characters except '-' which will be checked for in cleanStrList.
+      char[] specialChars = {'(', ')', '+', '*', '/', '^'};
       strScanner.addSpecialChar(specialChars);
    }
    
@@ -23,12 +24,55 @@ public class MathTree
    {
       answer = null;
       
+      LinkedList<String> strList = strScanner.scan(mathStatement);
+      
+      strList = cleanStrList(strList);
+      
       if(buildTree(strScanner.scan(mathStatement)))
          return true;
       else 
       {
          rootNode = null;
          return false;
+      }
+   }
+   
+   private LinkedList<String> cleanStrList(LinkedList<String> strList)
+   {
+      //Create a new scanner for the negative sign '-'
+      StringScanner negScanner = new StringScanner();
+      negScanner.addSpecialChar('-');
+      
+      //Create list of operators
+      char[] opChars = {'+', '*', '/', '^'};
+      
+      String tempStr;
+      LinkedList<String> newList = new LinkedList();
+      
+      for(int i = 0; i < strList.size(); i++)
+      {
+         tempStr = strList.get(i);
+         
+         //Parse strings with negative signs. Some will become negative signs others substraction.
+         if(tempStr.length() > 1 && tempStr.contains("-"))
+         {  
+            newList = negScanner.scan(tempStr);
+            
+            if(newList.peekFirst() == "-")
+            {
+               newList.remove(i);
+               newList.set(0, '-' + newList.peekFirst());
+            }
+            
+            strList.addAll(i, newList);
+            
+            i += newList.size() - 1;
+         }
+         //Add implicit multiplication to before/after parenthesis
+         if(tempStr == "(" && i < 0)
+         {
+            
+         }
       }
    }
    
