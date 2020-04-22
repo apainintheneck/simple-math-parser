@@ -34,6 +34,10 @@ public class MathTree
       //strList = cleanStrList(strList);
       cleanStrList(strList);
       
+      //TESTING
+      for(String str : strList)
+         System.out.println("Item: " + str);
+      
       if(buildTree(strList))
       {
          if(rootNode.checkTree())
@@ -136,7 +140,7 @@ public class MathTree
    {
       String token;
       mathNode.Expression rootNode = null;
-      mathNode.Expression lastNode = null;
+      //mathNode.Expression lastNode = null;
       mathNode.Expression newNode = null;
       
       while(strTokens.isEmpty() == false) 
@@ -179,6 +183,11 @@ public class MathTree
                return null;
             
             rootNode = insertNode(rootNode, newNode);
+            
+            if(rootNode == null)
+               return null;
+            else
+               continue;
          }
          
          newNode = nodeFactory.buildNode(token);
@@ -192,9 +201,6 @@ public class MathTree
          
          if(rootNode == null)
             return null;
-         else
-            lastNode = newNode;
-         
       }
       
       if(isParens)

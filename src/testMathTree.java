@@ -37,6 +37,20 @@ public class testMathTree
       System.out.println("---Complex Expressions---");
       for(String expr : complexExpressions)
          calculateAndPrint(expr);
+      
+      String[] difficultExpressions = new String[7];
+      
+      difficultExpressions[0] = "5(6)";
+      difficultExpressions[1] = "-5(-6)";
+      difficultExpressions[2] = "7 - -7";
+      difficultExpressions[3] = "(6 * 8) + 9";
+      difficultExpressions[4] = "(6 + 8) 9";
+      difficultExpressions[5] = ")5+6";
+      difficultExpressions[6] = "--6 + 7";
+      
+      System.out.println("---Difficult Expressions---");
+      for(String expr : difficultExpressions)
+         calculateAndPrint(expr);
    }
    
    public static void calculateAndPrint(String expression)
