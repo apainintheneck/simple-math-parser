@@ -44,7 +44,7 @@ public class MathTree
       negScanner.addSpecialChar('-');
       
       //Create list of operators
-      char[] opChars = {'+', '*', '/', '^'};
+      String opStr = "+-*/^";
       
       String tempStr;
       LinkedList<String> newList = new LinkedList();
@@ -68,12 +68,30 @@ public class MathTree
             
             i += newList.size() - 1;
          }
-         //Add implicit multiplication to before/after parenthesis
-         if(tempStr == "(" && i < 0)
+         //Add implicit multiplication before/after parenthesis
+         else if(tempStr == "(" && i > 0)
          {
+            String prevStr = strList.get(i - 1);
             
+            if(!opStr.contains(prevStr) || prevStr != "(")
+            {
+               strList.add(i, "*");
+               i++;
+            }
+         }
+         else if(tempStr == ")" && i < strList.size() - 1)
+         {
+            String nextStr = strList.get(i + 1);
+            
+            if(!opStr.contains(nextStr) || nextStr != ")")
+            {
+               strList.add(i + 1, "*");
+               i++;
+            }
          }
       }
+      
+      return strList;
    }
    
    private boolean buildTree(LinkedList<String> strTokens)
@@ -173,9 +191,17 @@ public class MathTree
             parent = (mathNode.Operator) parent.rightNode;
          }
          
-         newOperator.leftNode = parent.rightNode;
-         parent.rightNode = newOperator;
-         return rootNode;
+         if(parent.rightNode == null) 
+         {
+            System.out.println("Invalid: Missing between two operators.");
+            return null;
+         }
+         else
+         {
+            newOperator.leftNode = parent.rightNode;
+            parent.rightNode = newOperator;
+            return rootNode;
+         }
          
       }
       else
