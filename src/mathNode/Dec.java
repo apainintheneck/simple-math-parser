@@ -8,5 +8,22 @@ public class Dec extends Expression
 
    public Number calculate() { return value; }
 
-   public String toString() { return Double.toString(value); }
+   public String toString() 
+   { 
+      String str = Double.toString(value); 
+      
+      if(isParens())
+         return '(' + str + ')';
+      else
+         return str;
+   }
+   
+   @Override
+   public Object clone() throws CloneNotSupportedException
+   {
+      return (Dec) super.clone();
+   }
+   
+   @Override
+   public boolean checkTree() { return true; }
 }

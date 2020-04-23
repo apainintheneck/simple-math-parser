@@ -12,9 +12,9 @@ public class testStringScanner
       char[] specialChars = {'.', ',', '?', ';', '(', ')'};
       scanner.addSpecialChar(specialChars);
       
-      String sentence1 = "This is a sentence that will never end; it ends here.";
+      String sentence1 = "    This is a sentence that will never end; it ends here.    ";
       String sentence2 = "Once in a while, in my opinion, you must quit.";
-      String sentence3 = "The end of world(if the world does end at all?) may be soon.";
+      String sentence3 = "The end of world(if the world does end at all?)    may be soon.";
       
       scanAndPrint(sentence1);
       scanAndPrint(sentence2);

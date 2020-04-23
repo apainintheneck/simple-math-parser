@@ -18,4 +18,9 @@ public abstract class Expression implements Cloneable
     */
    abstract public Number calculate();
    abstract public String toString();
+   public Object clone() throws CloneNotSupportedException
+   {
+      return (Expression) super.clone();
+   }
+   abstract public boolean checkTree();
 }

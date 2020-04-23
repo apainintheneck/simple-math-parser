@@ -6,8 +6,8 @@ public class Sub extends Operator
    
    public Number calculate()
    {
-      Number leftNum = leftNode.calculate();
-      Number rightNum = rightNode.calculate();
+      Number leftNum = getLeftNode().calculate();
+      Number rightNum = getRightNode().calculate();
       
       if(leftNum instanceof Integer && rightNum instanceof Integer)
          return leftNum.intValue() - rightNum.intValue();
@@ -17,6 +17,20 @@ public class Sub extends Operator
    
    public String toString()
    {
-      return leftNode.toString() + " - " + rightNode.toString();
+      String str = getLeftNode().toString() + " - " + getRightNode().toString();
+      
+      if(isParens())
+         return '(' + str + ')';
+      else
+         return str;
+   }
+   
+   @Override
+   public Object clone() throws CloneNotSupportedException
+   {
+      Sub clone = (Sub) super.clone();
+      clone.setLeftNode((Expression) this.getLeftNode().clone());
+      clone.setRightNode((Expression) this.getRightNode().clone());
+      return clone;
    }
 }
