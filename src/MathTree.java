@@ -8,7 +8,7 @@ import java.util.LinkedList;
 public class MathTree
 {
    private mathNode.Expression rootNode = null;
-   private StringScanner strScanner = new StringScanner();
+   private StringScanner strScanner = new StringScanner(); //Set up in the constructor
    private mathNode.Factory nodeFactory = new mathNode.Factory();
    
    /**
@@ -73,9 +73,17 @@ public class MathTree
          {  
             newList = negScanner.scan(tempStr);
             
-            for(int k = 1; k < newList.size(); k++)
+            if(newList.get(0).equals("-") && !newList.get(1).equals("-"))
             {
-               if(newList.get(k - 1).equals("-") && !newList.get(k).equals("-"))
+               newList.removeFirst();
+               String newStr = "-" + newList.removeFirst();
+               newList.addFirst(newStr);
+            }
+            
+            for(int k = 2; k < newList.size(); k++)
+            {
+               if(newList.get(k - 2).equals("-") && newList.get(k - 1).equals("-") 
+                     && !newList.get(k).equals("-"))
                {
                   newList.remove(k - 1);
                   String newStr = "-" + newList.remove(k - 1);
