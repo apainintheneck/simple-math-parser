@@ -26,8 +26,8 @@ public class testMathNode
       
       for(mathNode.Operator op : opNodes)
       {
-         op.leftNode = leftNode;
-         op.rightNode = rightNode;
+         op.setLeftNode(leftNode);
+         op.setRightNode(rightNode);
          System.out.println("--> " + op + " = " + op.calculate());
       }
    }
@@ -39,8 +39,8 @@ public class testMathNode
       
       for(mathNode.Operator op : opNodes)
       {
-         op.leftNode = leftNode;
-         op.rightNode = rightNode;
+         op.setLeftNode(leftNode);
+         op.setRightNode(rightNode);
          System.out.println("--> " + op + " = " + op.calculate());
       }
    }

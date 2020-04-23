@@ -246,31 +246,32 @@ public class MathTree implements Cloneable
             parent = (mathNode.Operator) rootNode;
          else
          {
-            newOperator.leftNode = rootNode;
+            newOperator.setLeftNode(rootNode);
             return newOperator;
          }
          
          if(parent.getPrecedence() <= newOperator.getPrecedence())
          {
-            newOperator.leftNode = parent;
+            newOperator.setLeftNode(parent);
             return newOperator;
          }
          //Not sure about this part.
-         while(parent.getPrecedence() > newOperator.getPrecedence() &&
-               parent.rightNode != null && parent.rightNode instanceof mathNode.Operator)
+         while(parent.getPrecedence() > newOperator.getPrecedence() 
+               && parent.getRightNode() != null 
+               && parent.getRightNode() instanceof mathNode.Operator)
          {
-            parent = (mathNode.Operator) parent.rightNode;
+            parent = (mathNode.Operator) parent.getRightNode();
          }
          
-         if(parent.rightNode == null) 
+         if(parent.getRightNode() == null) 
          {
             System.out.println("Invalid: Missing value between two operators");
             return null;
          }
          else
          {
-            newOperator.leftNode = parent.rightNode;
-            parent.rightNode = newOperator;
+            newOperator.setLeftNode(parent.getRightNode());
+            parent.setRightNode(newOperator);
             return rootNode;
          }
          
@@ -289,19 +290,19 @@ public class MathTree implements Cloneable
             return null;
          }
          
-         while(parent.rightNode != null)
+         while(parent.getRightNode() != null)
          {
-            if(parent.rightNode instanceof mathNode.Operator)
-               parent = (mathNode.Operator) parent.rightNode;
+            if(parent.getRightNode() instanceof mathNode.Operator)
+               parent = (mathNode.Operator) parent.getRightNode();
             else
             {
                System.out.println("Invalid: Missing operator between " + 
-                     parent.rightNode + " + " + newNode);
+                     parent.getRightNode() + " + " + newNode);
                return null;
             }
          }
          
-         parent.rightNode = newNode;
+         parent.setRightNode(newNode);
          return rootNode;
       }
    }
