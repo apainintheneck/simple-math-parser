@@ -6,8 +6,8 @@ public class Add extends Operator
    
    public Number calculate()
    {
-      Number leftNum = leftNode.calculate();
-      Number rightNum = rightNode.calculate();
+      Number leftNum = getLeftNode().calculate();
+      Number rightNum = getRightNode().calculate();
       
       if(leftNum instanceof Integer && rightNum instanceof Integer)
          return leftNum.intValue() + rightNum.intValue();
@@ -17,7 +17,7 @@ public class Add extends Operator
    
    public String toString()
    {
-      String str = leftNode.toString() + " + " + rightNode.toString();
+      String str = getLeftNode().toString() + " + " + getRightNode().toString();
       
       if(isParens())
          return '(' + str + ')';
@@ -29,8 +29,8 @@ public class Add extends Operator
    public Object clone() throws CloneNotSupportedException
    {
       Add clone = (Add) super.clone();
-      clone.leftNode = (Expression) this.leftNode.clone();
-      clone.rightNode = (Expression) this.rightNode.clone();
+      clone.setLeftNode((Expression) this.getLeftNode().clone());
+      clone.setRightNode((Expression) this.getRightNode().clone());
       return clone;
    }
 }
