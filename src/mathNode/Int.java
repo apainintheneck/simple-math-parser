@@ -13,7 +13,7 @@ public class Int extends Expression
       String str = Integer.toString(value); 
       
       if(isParens())
-         return '\"' + str + '\"';
+         return '(' + str + ')';
       else
          return str;
    }

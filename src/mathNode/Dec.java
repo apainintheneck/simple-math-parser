@@ -13,7 +13,7 @@ public class Dec extends Expression
       String str = Double.toString(value); 
       
       if(isParens())
-         return '\"' + str + '\"';
+         return '(' + str + ')';
       else
          return str;
    }

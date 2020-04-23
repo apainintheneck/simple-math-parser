@@ -31,12 +31,7 @@ public class MathTree
    {
       LinkedList<String> strList = strScanner.scan(mathStatement);
       
-      //strList = cleanStrList(strList);
       cleanStrList(strList);
-      
-      //TESTING
-      for(String str : strList)
-         System.out.println("Item: " + str);
       
       if(buildTree(strList))
       {
@@ -78,10 +73,15 @@ public class MathTree
          {  
             newList = negScanner.scan(tempStr);
             
-            if(newList.peekFirst() == "-")
+            for(int k = 1; k < newList.size(); k++)
             {
-               newList.remove(0);
-               newList.set(0, '-' + newList.peekFirst());
+               if(newList.get(k - 1).equals("-") && !newList.get(k).equals("-"))
+               {
+                  newList.remove(k - 1);
+                  String newStr = "-" + newList.remove(k - 1);
+                  newList.add(k - 1, newStr);
+                  k--;
+               }
             }
             
             strList.remove(i);
@@ -89,22 +89,23 @@ public class MathTree
             
             i += newList.size() - 1;
          }
-         //Add implicit multiplication before/after parenthesis
-         else if(tempStr == "(" && i > 0)
+         //Add implicit multiplication before open parenthesis
+         else if(tempStr.equals("(") && i > 0)
          {
             String prevStr = strList.get(i - 1);
             
-            if(!opStr.contains(prevStr) || prevStr != "(")
+            if(!opStr.contains(prevStr) && prevStr != "(")
             {
                strList.add(i, "*");
                i++;
             }
          }
-         else if(tempStr == ")" && i < strList.size() - 1)
+         //Add implicit multiplication after closed parenthesis
+         else if(tempStr.equals(")") && i < strList.size() - 1)
          {
             String nextStr = strList.get(i + 1);
             
-            if(!opStr.contains(nextStr) || nextStr != ")")
+            if(!opStr.contains(nextStr) && nextStr != ")")
             {
                strList.add(i + 1, "*");
                i++;
@@ -148,7 +149,7 @@ public class MathTree
          token = strTokens.poll();
          
          //Handle closed parenthesis
-         if(token == ")") 
+         if(token.equals(")")) 
          {
             if(isParens && rootNode == null)
             {
@@ -168,7 +169,7 @@ public class MathTree
          }
          
          //Handle open parenthesis
-         if(token == "(")
+         if(token.equals("("))
          {
             /* Shouldn't be necessary because of cleanStrList() lines 88-98
             if(lastNode != null && !(lastNode instanceof mathNode.Operator))
@@ -276,7 +277,7 @@ public class MathTree
          else
          {
             System.out.println("Invalid: Missing operator between " + 
-                  rootNode + " + " + newNode);
+                  rootNode + " and " + newNode);
             return null;
          }
          

@@ -2,7 +2,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
- * This classes breaks up strings based upon given special characters and delimeters.
+ * This classes breaks up strings based upon given special characters and delimiters.
  * @author kevinrobell
  *
  */
