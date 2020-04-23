@@ -5,7 +5,7 @@ import java.util.LinkedList;
  * @author kevinrobell
  *
  */
-public class MathTree
+public class MathTree implements Cloneable
 {
    private mathNode.Expression rootNode = null;
    private StringScanner strScanner = new StringScanner(); //Set up in the constructor
@@ -330,4 +330,12 @@ public class MathTree
          return rootNode.toString();
    }
    
+   public Object clone() throws CloneNotSupportedException
+   {
+      MathTree clone = (MathTree) super.clone();
+      clone.nodeFactory = (mathNode.Factory) nodeFactory.clone();
+      clone.rootNode = (mathNode.Expression) rootNode.clone();
+      
+      return clone;
+   }
 }

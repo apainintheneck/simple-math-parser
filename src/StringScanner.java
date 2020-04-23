@@ -6,7 +6,7 @@ import java.util.LinkedList;
  * @author kevinrobell
  *
  */
-public class StringScanner
+public class StringScanner implements Cloneable
 {
    private LinkedList<String> tokenList = new LinkedList();
    private HashSet<Character> delimSet = new HashSet(); //Set of delimiters
@@ -83,6 +83,16 @@ public class StringScanner
    {
       if(token.isEmpty() == false)
          tokenList.add(token);
+   }
+   
+   public Object clone() throws CloneNotSupportedException
+   {
+      StringScanner clone = (StringScanner) super.clone();
+      clone.tokenList = (LinkedList) tokenList.clone();
+      clone.delimSet = (HashSet) delimSet.clone(); 
+      clone.specCharSet = (HashSet) specCharSet.clone();
+      
+      return clone;
    }
    
 }
