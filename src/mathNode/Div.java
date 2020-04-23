@@ -11,7 +11,12 @@ public class Div extends Operator
    
    public String toString()
    {
-      return leftNode.toString() + " / " + rightNode.toString();
+      String str = leftNode.toString() + " / " + rightNode.toString();
+      
+      if(isParens())
+         return '\"' + str + '\"';
+      else
+         return str;
    }
    
    @Override

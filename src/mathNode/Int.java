@@ -8,7 +8,15 @@ public class Int extends Expression
 
    public Number calculate() { return value; }
 
-   public String toString() { return Integer.toString(value); }
+   public String toString() 
+   { 
+      String str = Integer.toString(value); 
+      
+      if(isParens())
+         return '\"' + str + '\"';
+      else
+         return str;
+   }
    
    @Override
    public Object clone() throws CloneNotSupportedException
