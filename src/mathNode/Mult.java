@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node for multiplication operator.
+ * @author kevinrobell
+ *
+ */
 public class Mult extends Operator
 {
    public Mult() { precedence = 2; }
@@ -9,9 +14,11 @@ public class Mult extends Operator
       Number leftNum = getLeftNode().calculate();
       Number rightNum = getRightNode().calculate();
       
+      //If both numbers below it on the tree are integers, do integer multiplication.
       if(leftNum instanceof Integer && rightNum instanceof Integer)
          return leftNum.intValue() * rightNum.intValue();
       
+      //Otherwise do decimal multiplication.
       return leftNum.doubleValue() * rightNum.doubleValue();
    }
    

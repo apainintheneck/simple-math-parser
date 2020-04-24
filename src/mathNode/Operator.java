@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * An abstract math operator class.
+ * @author kevinrobell
+ *
+ */
 public abstract class Operator extends Expression
 {
    private Expression leftNode = null;

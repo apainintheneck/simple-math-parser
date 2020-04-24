@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node that holds decimal values.
+ * @author kevinrobell
+ *
+ */
 public class Dec extends Expression
 {
    private double value;
