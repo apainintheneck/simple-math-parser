@@ -73,6 +73,7 @@ public class MathTree implements Cloneable
          {  
             newList = negScanner.scan(tempStr);
             
+            //Check for negative sign at beginning of newList.
             if(newList.get(0).equals("-") && !newList.get(1).equals("-"))
             {
                newList.removeFirst();
@@ -80,6 +81,7 @@ public class MathTree implements Cloneable
                newList.addFirst(newStr);
             }
             
+            //Check for negative and subtraction signs in the middle of newList.
             for(int k = 2; k < newList.size(); k++)
             {
                if(newList.get(k - 2).equals("-") && newList.get(k - 1).equals("-") 
@@ -92,6 +94,7 @@ public class MathTree implements Cloneable
                }
             }
             
+            //Replace tempStr in strList with newList.
             strList.remove(i);
             strList.addAll(i, newList);
             
@@ -179,14 +182,6 @@ public class MathTree implements Cloneable
          //Handle open parenthesis
          if(token.equals("("))
          {
-            /* Shouldn't be necessary because of cleanStrList() lines 88-98
-            if(lastNode != null && !(lastNode instanceof mathNode.Operator))
-            {
-               lastNode = nodeFactory.buildNode('*');
-               rootNode = insertNode(rootNode, lastNode);
-            }
-            */
-            
             newNode = buildTree(strTokens, true);
             if(newNode == null) 
                return null;
@@ -199,6 +194,7 @@ public class MathTree implements Cloneable
                continue;
          }
          
+         //Create new node and place it in the tree.
          newNode = nodeFactory.buildNode(token);
          if(newNode == null)
          {
@@ -212,6 +208,7 @@ public class MathTree implements Cloneable
             return null;
       }
       
+      //Check if ending parenthesis is missing.
       if(isParens)
       {
          System.out.println("Invalid: Missing \")\"");
@@ -236,12 +233,13 @@ public class MathTree implements Cloneable
       //If no new node, return tree without changes.
       else if(newNode == null)
          return rootNode;
-      //Place operator node in tree according to precedence.
+      //Place operator node without parenthesis in tree according to precedence.
       else if(newNode instanceof mathNode.Operator && !newNode.isParens())
       {
          mathNode.Operator newOperator = (mathNode.Operator) newNode;
          mathNode.Operator parent;
          
+         //Check if rootNode is an operator
          if(rootNode instanceof mathNode.Operator)
             parent = (mathNode.Operator) rootNode;
          else
@@ -250,12 +248,12 @@ public class MathTree implements Cloneable
             return newOperator;
          }
          
+         //Find place in tree to place new operator by comparing operator precedence.
          if(parent.getPrecedence() <= newOperator.getPrecedence())
          {
             newOperator.setLeftNode(parent);
             return newOperator;
          }
-         //Not sure about this part.
          while(parent.getPrecedence() > newOperator.getPrecedence() 
                && parent.getRightNode() != null 
                && parent.getRightNode() instanceof mathNode.Operator)
@@ -263,6 +261,7 @@ public class MathTree implements Cloneable
             parent = (mathNode.Operator) parent.getRightNode();
          }
          
+         //Check if value is missing between two operators.
          if(parent.getRightNode() == null) 
          {
             System.out.println("Invalid: Missing value between two operators");
@@ -276,7 +275,9 @@ public class MathTree implements Cloneable
          }
          
       }
-      //Place Int, Dec, or parenthesis node in tree.
+      //Place Int, Dec, or parenthesis node in tree. It goes on the rightmost empty node
+      //of the tree. If that node is filled, it means there are two numbers in a row
+      //and it is invalid.
       else
       {
          mathNode.Operator parent;
