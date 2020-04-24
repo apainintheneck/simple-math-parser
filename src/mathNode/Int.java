@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node that holds integer values.
+ * @author kevinrobell
+ *
+ */
 public class Int extends Expression
 {
    private int value;

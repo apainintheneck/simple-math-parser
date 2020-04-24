@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node for exponent operator.
+ * @author kevinrobell
+ *
+ */
 public class Pow extends Operator
 {
    public Pow() { precedence = 1; }

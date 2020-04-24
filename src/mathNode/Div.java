@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node for division operator.
+ * @author kevinrobell
+ *
+ */
 public class Div extends Operator
 {
    public Div() { precedence = 2; }

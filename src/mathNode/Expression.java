@@ -22,5 +22,10 @@ public abstract class Expression implements Cloneable
    {
       return (Expression) super.clone();
    }
+   
+   /**
+    * A recursive method to check if the tree is constructed correctly.
+    * @return boolean
+    */
    abstract public boolean checkTree();
 }

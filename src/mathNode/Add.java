@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node that holdes the addition operator.
+ * @author kevinrobell
+ *
+ */
 public class Add extends Operator
 {
    public Add() { precedence = 3; }
@@ -9,9 +14,11 @@ public class Add extends Operator
       Number leftNum = getLeftNode().calculate();
       Number rightNum = getRightNode().calculate();
       
+      //Do integer addition if both nodes below are integers.
       if(leftNum instanceof Integer && rightNum instanceof Integer)
          return leftNum.intValue() + rightNum.intValue();
       
+      //Otherwise do decimal addition.
       return leftNum.doubleValue() + rightNum.doubleValue();
    }
    

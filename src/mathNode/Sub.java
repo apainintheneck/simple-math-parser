@@ -1,5 +1,10 @@
 package mathNode;
 
+/**
+ * Node for subtraction operator.
+ * @author kevinrobell
+ *
+ */
 public class Sub extends Operator
 {
    public Sub() { precedence = 3; }
@@ -9,9 +14,11 @@ public class Sub extends Operator
       Number leftNum = getLeftNode().calculate();
       Number rightNum = getRightNode().calculate();
       
+      //If both values below it are integers do integer subtraction.
       if(leftNum instanceof Integer && rightNum instanceof Integer)
          return leftNum.intValue() - rightNum.intValue();
       
+      //Otherwise do double subtraction.
       return leftNum.doubleValue() - rightNum.doubleValue();
    }
    
