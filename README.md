@@ -15,7 +15,7 @@ The second pass takes the list of strings and handles special cases. It discerns
 ### 2. Building The Tree
 The tree is build according to math precedence rules. Expressions are solved from left to right unless the operation on the right has higher precedence.
 #### _Math Expression Nodes_
--picture of node uml diagram
+<img src="Diagrams/MathNodesUML.png" width="600" />
 
 The operator nodes have links to a left and right node. Number nodes, Int and Dec, do not have links to other nodes. The nodes have built in recursive operations for calculate(), toString(), clone(), and checkTree().
 >Expression.calculate(): Calculates result of all the operations below this node and returns a Number object.
