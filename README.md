@@ -38,4 +38,4 @@ The operator nodes have links to a left and right node. Number nodes, Int and De
 
 #### _Inserting Nodes_
 Nodes are always inserted in the right side of the tree because math expression are always evaluated left to right. Operators are compared starting from the top of the tree with other operator nodes to find the right spot based upon precedence. Number nodes are added to the rightmost bottom part of the tree.
--Tree inserting diagram.
+![Math Tree Diagram](Diagrams/treediagram.png)
