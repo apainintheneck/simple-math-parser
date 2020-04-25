@@ -2,16 +2,26 @@
 A console calculator application with a homemade math parsing tree. If you want to try it out for yourself, checkout CalcApp.java and testMathTree.java.
 
 ## How MathTree Class Works
--Picture of MathTree Steps
-
 Essentially, the MathTree data structure takes a string and builds a parsing tree. If it fails because the input string is an invalid math statement, it deletes the tree and returns false.
 
 ### 1. Scanning The String
 This breaks up the string into tokens which can be used to build the tree later on.
 #### _First Pass_
 The first pass breaks up the string based upon delimiters, in this case whitespace characters, and special characters, in this case operators and parenthesis. This step is executed by strScanner in MathTree. It returns a list of strings.
+>5+5 * 85 --> {"5", "+", "5", "*", "85"}
 #### _Second Pass_
 The second pass takes the list of strings and handles special cases. It discerns the difference between subtraction and negation symbols. It also applies implicit multiplication with parenthesis.
+>5--5 --> {"5", "-", "-5"}
+
+>5- 5 --> {"5", "-", "5"}
+
+>5 -5 --> {"5", "-5"}
+
+>5(6) --> {"5", "*", "(", "6", ")"}
+
+>5+ (6) --> {"5", "+", "(", "6", ")"}
+
+>(7+6) 4 --> {"(", "7", "+", "6", ")", "*", "4"}
 ### 2. Building The Tree
 The tree is build according to math precedence rules. Expressions are solved from left to right unless the operation on the right has higher precedence.
 #### _Math Expression Nodes_
