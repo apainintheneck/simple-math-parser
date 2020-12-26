@@ -1,5 +1,5 @@
 # Simple Math Parser
-A console calculator application with a homemade math parsing tree. If you want to try it out for yourself, checkout CalcApp.java and testMathTree.java.
+A console calculator application with a homemade math parsing tree. If you want to try it out for yourself, build and run CalcApp.java.
 
 ## How MathTree Class Works
 Essentially, the MathTree data structure takes a string and builds a parsing tree. If it fails because the input string is an invalid math statement, it deletes the tree and returns false.
