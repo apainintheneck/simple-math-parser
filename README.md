@@ -23,7 +23,7 @@ The second pass takes the list of strings and handles special cases. It discerns
 
 >(7+6) 4 --> {"(", "7", "+", "6", ")", "*", "4"}
 ### 2. Building The Tree
-The tree is build according to math precedence rules. Expressions are solved from left to right unless the operation on the right has higher precedence.
+The tree is built according to math precedence rules. Expressions are solved from left to right unless the operation on the right has higher precedence.
 #### _Math Expression Nodes_
 ![Math Nodes UML](Diagrams/MathNodesUml.png)
 
